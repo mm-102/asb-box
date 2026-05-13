@@ -1,0 +1,20 @@
+CompileFlags:
+  Remove:
+    - "-mlongcalls"
+    - "-mfix-esp32-psram-cache-issue"
+    - "-mno-coproc"
+
+    - "-fno-printf-return-value"
+    - "-fno-reorder-functions"
+    - "-fstrict-volatile-bitfields"
+    - "-fno-defer-pop"
+    - "-fconserve-stack"
+
+    - "-Wno-format-truncation"
+    - "-Wno-format-overflow"
+    - "-Wno-stringop-truncation"
+    - "-Wno-stringop-overflow"
+    - "-Wno-restrict"
+    - "-Wno-unused-but-set-variable"
+    - "-Wno-packed-not-aligned"
+    - "-Wno-shift-negative-value"

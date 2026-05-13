@@ -1,0 +1,22 @@
+manifest:
+ remotes:
+  - name: zephyrproject
+    url-base: https://github.com/zephyrproject-rtos
+  - name: mm102
+    url-base: https://github.com/mm-102
+ projects:
+    - name: zephyr
+      remote: zephyrproject
+      revision: main
+      import:
+       name-allowlist:
+        - hal_espressif
+        - tf-psa-crypto
+        - mbedtls
+
+    - name: zephyr-minisumo2022
+      remote: mm102
+      revision: main
+
+ self:
+   path: asb-box

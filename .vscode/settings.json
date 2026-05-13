@@ -1,0 +1,8 @@
+{
+    "clangd.arguments": [
+        "--log=verbose",
+        "--header-insertion=iwyu",
+        "--background-index",
+        "--query-driver=**/*-gcc*"
+    ]
+}
