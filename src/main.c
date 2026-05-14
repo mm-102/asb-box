@@ -1,4 +1,5 @@
 #include <zephyr/kernel.h>
+#include <zephyr/net/net_if.h>
 #include <zephyr/logging/log.h>
 
 #include <net/ap.h>
@@ -11,16 +12,18 @@ int main(void)
 {
     LOG_INF("Starting AP demo...");
 
-    iface = net_if_get_default();
+    init_callbacks();
+
+    iface = net_if_get_wifi_sap();
     if (!iface) {
         LOG_ERR("Network interface not found!");
         return -1;
     }
-    init_callbacks();
     init_ap(iface);
     
     while (1) {
-        k_sleep(K_SECONDS(1));
+        k_sleep(K_SECONDS(5));
+        LOG_INF("Alive...");
     }
 
     return 0;

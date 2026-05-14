@@ -1,0 +1,19 @@
+# Kconfig (in project root)
+config APP_WIFI_SSID
+    string "Wi-Fi SSID"
+    default "Sumo_6_AP"
+
+config APP_WIFI_PSK
+    string "Wi-Fi Password"
+    default "sumo1234"
+
+config APP_AP_IP_ADDRESS
+    string "IP of the AP"
+    default "192.168.4.2"
+
+config APP_AP_NETMASK
+    string "Netmask of the AP"
+    default "255.255.255.0"
+
+# Source the main Zephyr tree Kconfig so the rest of the OS builds
+source "Kconfig.zephyr"
