@@ -2,21 +2,23 @@
 #include <zephyr/kernel.h>
 #include <zephyr/net/net_if.h>
 #include <zephyr/logging/log.h>
-#include <peripheral/reg_74hc595.h>
+#include <leds/anim_player.h>
 #include <net/ap.h>
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
 struct net_if *iface;
-static struct spi_dt_spec shift_reg_spi = REG_74HC595_SPEC(DT_ALIAS(shift_reg));
+
+frame_result_t anim_idle(uint32_t frame_no, void* _data){
+    return  (frame_result_t) {
+        .next_frame = K_MSEC(100),
+        .led_word = 1 << (frame_no & 7)
+    };
+}
 
 int main(void)
 {
     LOG_INF("Starting AP demo...");
-
-    if (reg_74hc595_init(&shift_reg_spi) < 0){
-        return 0;
-    }
 
     init_callbacks();
 
@@ -26,27 +28,14 @@ int main(void)
         return -1;
     }
     init_ap(iface);
-    
-    uint8_t data_out = 0x01; 
-    bool shift_left = true;
-    
+
+    anim_request_t idle_req = {.duration_ms = 2400, .func = anim_idle, .data = NULL};
+
     while (1) {
-        reg_74hc595_write(&shift_reg_spi, data_out);
-
-        if (shift_left) {
-            data_out <<= 1;
-            if (data_out == 0x80) { 
-                shift_left = false;
-            }
-        } else {
-            data_out >>= 1;
-            if (data_out == 0x01) { 
-                shift_left = true;
-            }
-        }
-
-        k_msleep(100);
+        anim_play(&idle_req);
+        k_msleep(5000);
     }
+
 
     return 0;
 }
