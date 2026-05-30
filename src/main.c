@@ -29,10 +29,10 @@ int main(void)
     }
     init_ap(iface);
 
-    anim_request_t idle_req = {.duration_ms = 2400, .func = anim_idle, .data = NULL};
+    // anim_request_t idle_req = {.duration_ms = 2400, .func = anim_idle, .data = NULL};
 
     while (1) {
-        anim_play(&idle_req);
+        // anim_play(&idle_req);
         k_msleep(5000);
     }
 

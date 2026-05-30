@@ -15,5 +15,17 @@ config APP_AP_NETMASK
     string "Netmask of the AP"
     default "255.255.255.0"
 
+config APP_COAPS_PORT
+    int "Port of coaps server"
+    default 5684
+
+config APP_PSK_ID
+    string "Username for coaps"
+    default "asb-box"
+
+config APP_PSK
+    string "Password for coaps"
+    default "bajojajo" 
+
 # Source the main Zephyr tree Kconfig so the rest of the OS builds
 source "Kconfig.zephyr"

@@ -4,5 +4,6 @@ list(APPEND SourcesC
 add_subdirectory(net)
 add_subdirectory(drivers)
 add_subdirectory(leds)
+add_subdirectory(logic)
 
 apply_source_list()
