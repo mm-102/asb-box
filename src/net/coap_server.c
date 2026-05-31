@@ -74,14 +74,34 @@ static int entry_post_handler(struct coap_resource *resource, struct coap_packet
     return -EINVAL; // Or send a CoAP 4.00 Bad Request
 }
 
+static int set_state_post_handler(struct coap_resource *resource, struct coap_packet *request,
+                                      struct sockaddr *addr, socklen_t addr_len) {
+    uint16_t payload_len;
+    const uint8_t *payload = coap_packet_get_payload(request, &payload_len);
+
+    if (payload && payload_len == sizeof(state_msg_t)) {
+        state_msg_t new_state;
+        memcpy(&new_state, payload, sizeof(state_msg_t));
+        
+        set_curr_state(&new_state);
+        
+        return send_state_response(request, addr, addr_len, &new_state, COAP_RESPONSE_CODE_CHANGED);
+    }
+    
+    LOG_ERR("Invalid dbg_state payload size: Expected %d, got %d", sizeof(state_msg_t), payload_len);
+    return -EINVAL;
+}
+
 static const char * const state_path[] = { "state", NULL };
 static const char * const reset_path[] = { "reset", NULL };
 static const char * const entry_path[] = { "entry", NULL };
+static const char * const set_state_path[] = { "set_state", NULL };
 
 static struct coap_resource resources[] = {
     { .path = state_path, .get = state_get_handler },
     { .path = reset_path, .get = reset_get_handler },
     { .path = entry_path, .post = entry_post_handler },
+    { .path = set_state_path, .post = set_state_post_handler },
     { NULL }
 };
 

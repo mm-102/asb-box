@@ -4,6 +4,8 @@
 #include <zephyr/logging/log.h>
 #include <leds/anim_player.h>
 #include <net/ap.h>
+#include <nvs/nvs_manager.h>
+#include <logic/logic.h>
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -28,6 +30,14 @@ int main(void)
         return -1;
     }
     init_ap(iface);
+
+    int ret = nvs_manager_init();
+    if (ret < 0){
+        LOG_ERR("Could not init nvs module!");
+        return -1;
+    }
+
+    logic_init();
 
     // anim_request_t idle_req = {.duration_ms = 2400, .func = anim_idle, .data = NULL};
 

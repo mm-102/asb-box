@@ -5,5 +5,6 @@ add_subdirectory(net)
 add_subdirectory(drivers)
 add_subdirectory(leds)
 add_subdirectory(logic)
+add_subdirectory(nvs)
 
 apply_source_list()
