@@ -24,4 +24,5 @@ void logic_init();
 void get_curr_state(state_msg_t *state);
 void set_curr_state(const state_msg_t *state);
 void reset_state(state_msg_t *state);
+void save_state(void);
 void recv_entry(const entry_msg_t *entry, state_msg_t *state);

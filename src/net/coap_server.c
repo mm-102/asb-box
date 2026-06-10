@@ -92,16 +92,40 @@ static int set_state_post_handler(struct coap_resource *resource, struct coap_pa
     return -EINVAL;
 }
 
+static int save_post_handler(struct coap_resource *resource, struct coap_packet *request,
+                             struct sockaddr *addr, socklen_t addr_len) {
+    
+    save_state();
+    
+    struct coap_packet response;
+    uint8_t response_buf[64];
+    
+    uint8_t token[COAP_TOKEN_MAX_LEN];
+    uint8_t token_len = coap_header_get_token(request, token);
+    uint16_t id = coap_header_get_id(request);
+
+    int res = coap_packet_init(&response, response_buf, sizeof(response_buf),
+                               COAP_VERSION_1, COAP_TYPE_ACK, token_len,
+                               token, COAP_RESPONSE_CODE_CHANGED, id);
+    
+    if (res < 0) return res;
+
+    zsock_sendto(server_sock, response.data, response.offset, 0, addr, addr_len);
+    return 0;
+}
+
 static const char * const state_path[] = { "state", NULL };
 static const char * const reset_path[] = { "reset", NULL };
 static const char * const entry_path[] = { "entry", NULL };
 static const char * const set_state_path[] = { "set_state", NULL };
+static const char * const save_path[] = { "save", NULL };
 
 static struct coap_resource resources[] = {
     { .path = state_path, .get = state_get_handler },
     { .path = reset_path, .get = reset_get_handler },
     { .path = entry_path, .post = entry_post_handler },
     { .path = set_state_path, .post = set_state_post_handler },
+    { .path = save_path, .post = save_post_handler },
     { NULL }
 };
 
