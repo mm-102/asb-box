@@ -6,6 +6,7 @@
 #include <net/ap.h>
 #include <nvs/nvs_manager.h>
 #include <logic/logic.h>
+#include <logic/buttons.h>
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -38,6 +39,7 @@ int main(void)
     }
 
     logic_init();
+    buttons_init();
 
     // anim_request_t idle_req = {.duration_ms = 2400, .func = anim_idle, .data = NULL};
 

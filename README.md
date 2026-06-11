@@ -1,6 +1,6 @@
 # Snake Charmer - Box Firmware
 
-This repository contains the firmware for the "Box" module of the Snake Charmer project. It runs on an ESP32-S2 microcontroller using the Zephyr RTOS and a custom board definition (`sumo_6`).
+This repository contains the firmware for the "Box" module of the Snake Charmer project. It runs on an ESP32-S2 microcontroller using the Zephyr RTOS and a custom board definition (`sumo_6`) - [board repository](https://github.com/mm-102/zephyr-minisumo2022).
 
 The Box acts as a secure CoAPS server and a Wi-Fi Access Point, processing incoming sensor data from the "Flute" (instrument), managing the game's state machine, and providing visual feedback via a 74HC595-driven LED strip.
 

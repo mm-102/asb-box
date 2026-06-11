@@ -37,15 +37,11 @@
 	status = "okay";
 };
 
-// &flash0 {
-// 	partitions {
-// 		compatible = "fixed-partitions";
-// 		#address-cells = <1>;
-// 		#size-cells = <1>;
-// 
-// 		storage_partition: partition@2f0000 {
-// 			label = "storage";
-// 			reg = <0x002f0000 0x00004000>;
-// 		};
-// 	};
-// };
+// repurpose sensor pins for buttins
+&grd1 {
+    gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+};
+
+&grd2 {
+    gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+};
